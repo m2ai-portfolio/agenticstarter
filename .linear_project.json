@@ -1,0 +1,31 @@
+{
+  "project_id": "f6a67fa7-abcd-437f-8bbf-2edf8d7f0506",
+  "project_name": "AgenticStarter",
+  "project_slug": "208bd7cf2a02",
+  "team_id": "488a02b5-c546-4242-95fb-bf6caf038fa1",
+  "team_key": "M2A",
+  "meta_issue_id": "M2A-569",
+  "total_issues": 3,
+  "initialized": true,
+  "created_at": "2026-03-28T05:56:00Z",
+  "issues": [
+    {
+      "id": "M2A-566",
+      "title": "Feature 1: Project Scaffold - Generate directory structure with CLI",
+      "feature_number": 1,
+      "priority": "Urgent"
+    },
+    {
+      "id": "M2A-567",
+      "title": "Feature 2: Landing Page Generator - Create static HTML via prompt",
+      "feature_number": 2,
+      "priority": "High"
+    },
+    {
+      "id": "M2A-568",
+      "title": "Feature 3: MCP Server - Minimal Model Context Protocol server",
+      "feature_number": 3,
+      "priority": "High"
+    }
+  ]
+}
