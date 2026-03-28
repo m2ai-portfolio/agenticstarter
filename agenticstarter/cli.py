@@ -47,14 +47,16 @@ def landing_page(name, desc, output):
 @cli.command()
 @click.argument('action', type=click.Choice(['start', 'stop']))
 @click.option('--port', default=8000, help='Port to run the server on')
-def mcp_server(action, port):
+@click.option('--host', default='localhost', help='Host to bind the server to')
+def mcp_server(action, port, host):
     """Start or stop the MCP server."""
     if action == 'start':
-        click.echo(f"Starting MCP server on port {port}...")
-        click.echo("MCP server functionality coming soon!")
+        from agenticstarter.mcp_server import MCPServer
+        server = MCPServer(host=host, port=port)
+        server.start()
     elif action == 'stop':
         click.echo("Stopping MCP server...")
-        click.echo("MCP server functionality coming soon!")
+        click.echo("Note: To stop a running server, use Ctrl+C in the terminal where it's running.")
 
 
 @cli.command()

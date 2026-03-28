@@ -89,10 +89,37 @@ def test_landing_page_command(temp_dir):
 
 def test_mcp_server_start_command():
     """Test the mcp-server start command."""
+    import socket
+    import threading
+    import time
+
+    # Find a free port
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))
+        s.listen(1)
+        port = s.getsockname()[1]
+
     runner = CliRunner()
-    result = runner.invoke(cli, ['mcp-server', 'start'])
-    assert result.exit_code == 0
-    assert 'Starting MCP server' in result.output
+
+    # Run server in background thread with timeout
+    def run_server():
+        result = runner.invoke(cli, ['mcp-server', 'start', '--port', str(port)])
+
+    server_thread = threading.Thread(target=run_server, daemon=True)
+    server_thread.start()
+
+    # Give server time to start
+    time.sleep(0.5)
+
+    # Verify server is listening by attempting to connect
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(1)
+            s.connect(('localhost', port))
+            # If we can connect, server started successfully
+            assert True
+    except (socket.timeout, ConnectionRefusedError):
+        assert False, "Server did not start"
 
 
 def test_mcp_server_stop_command():
