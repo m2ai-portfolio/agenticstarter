@@ -5,6 +5,7 @@ CLI commands for AgenticStarter
 import click
 from agenticstarter.project_template import generate_project_scaffold
 from agenticstarter.landing_page_template import generate_landing_page
+from agenticstarter.mcp_server import MCPServer
 
 
 @click.group()
@@ -67,16 +68,23 @@ def landing_page(name, desc, output):
 
 @cli.group()
 def mcp_server():
-    """MCP server commands (Feature 3 - Not yet implemented)."""
+    """MCP server commands for Model Context Protocol."""
     pass
 
 
 @mcp_server.command()
+@click.option("--host", default="localhost", help="Host to bind to", show_default=True)
 @click.option("--port", default=8000, help="Port to run the server on", show_default=True)
-def start(port):
+def start(host, port):
     """Start the MCP server."""
-    click.echo(f"MCP server start coming in Feature 3...")
-    click.echo(f"Would listen on port {port}")
+    click.echo(f"Starting MCP server on {host}:{port}...")
+
+    try:
+        server = MCPServer(host=host, port=port)
+        server.start(blocking=True)
+    except Exception as e:
+        click.echo(f"✗ Error starting MCP server: {e}", err=True)
+        raise
 
 
 @cli.command()
