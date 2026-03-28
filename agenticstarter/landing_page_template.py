@@ -1,6 +1,7 @@
 """Landing page template generator for AgenticStarter."""
 
 from pathlib import Path
+import html
 
 
 def generate_landing_page(product_name, description, output_file='index.html'):
@@ -12,13 +13,17 @@ def generate_landing_page(product_name, description, output_file='index.html'):
         description: Product description
         output_file: Output HTML file path
     """
+    # Escape user inputs to prevent XSS attacks
+    escaped_name = html.escape(product_name)
+    escaped_desc = html.escape(description)
+
     html_content = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{description}">
-    <title>{product_name}</title>
+    <meta name="description" content="{escaped_desc}">
+    <title>{escaped_name}</title>
     <style>
         * {{
             margin: 0;
@@ -74,8 +79,8 @@ def generate_landing_page(product_name, description, output_file='index.html'):
 </head>
 <body>
     <div class="container">
-        <h1>{product_name}</h1>
-        <p>{description}</p>
+        <h1>{escaped_name}</h1>
+        <p>{escaped_desc}</p>
         <a href="#" class="cta-button">Get Started</a>
     </div>
 </body>
