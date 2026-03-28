@@ -1,0 +1,25 @@
+{
+  "project_id": "8a147eff-d875-4732-84b0-49a45b9c766e",
+  "project_name": "AgenticStarter",
+  "project_slug": "98948ce05d74",
+  "meta_issue_id": "M2A-593",
+  "total_issues": 3,
+  "initialized_at": "2026-03-28T07:29:13Z",
+  "issues": [
+    {
+      "id": "M2A-590",
+      "title": "Feature: Project Scaffold Generator",
+      "priority": 1
+    },
+    {
+      "id": "M2A-591",
+      "title": "Feature: Landing Page Generator",
+      "priority": 2
+    },
+    {
+      "id": "M2A-592",
+      "title": "Feature: MCP Server",
+      "priority": 3
+    }
+  ]
+}
