@@ -4,6 +4,7 @@ CLI commands for AgenticStarter
 
 import click
 from agenticstarter.project_template import generate_project_scaffold
+from agenticstarter.landing_page_template import generate_landing_page
 
 
 @click.group()
@@ -46,11 +47,22 @@ def init(name, path):
 @cli.command()
 @click.option("--name", required=True, help="Name of the product")
 @click.option("--desc", required=True, help="Description of the product")
-def landing_page(name, desc):
-    """Create a landing page for your micro-SaaS product (Feature 2 - Not yet implemented)."""
-    click.echo("Landing page generation coming in Feature 2...")
-    click.echo(f"Product: {name}")
-    click.echo(f"Description: {desc}")
+@click.option(
+    "--output",
+    default=".",
+    help="Directory where index.html should be created",
+    show_default=True,
+)
+def landing_page(name, desc, output):
+    """Create a landing page for your micro-SaaS product."""
+    click.echo(f"Generating landing page for: {name}")
+
+    try:
+        output_file = generate_landing_page(name, desc, output)
+        click.echo(f"✓ Landing page created at: {output_file}")
+    except Exception as e:
+        click.echo(f"✗ Error creating landing page: {e}", err=True)
+        raise
 
 
 @cli.group()
