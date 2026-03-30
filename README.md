@@ -1,6 +1,12 @@
+<p align="center">
+  <img src="cover.png" alt="AgenticStarter" width="720" />
+</p>
+
 # AgenticStarter
 
-A CLI starter kit that scaffolds micro-SaaS projects for agentic tools. Generates project structure, a static landing page, and a Model Context Protocol (MCP) server — so you ship the product instead of writing boilerplate.
+Skip the boilerplate. AgenticStarter is a CLI that scaffolds a complete micro-SaaS project for your agentic tool — project structure, landing page, and an MCP server — in one command.
+
+Built for solo developers who have a working agent and want to ship it as a product.
 
 ## Install
 
@@ -10,33 +16,15 @@ cd agenticstarter
 pip install -e .
 ```
 
-Requires Python 3.11+.
+Requires Python 3.11+. No external services needed.
 
-## Usage
+## What You Get
 
-### Scaffold a new project
+**Project scaffold** — Standard Python package layout with `pyproject.toml`, `src/`, `tests/`, and a CLI entry point. Ready for `pip install -e .` out of the box.
 
-```bash
-agenticstarter init --name "my-agent" --path ./projects
-```
+**Landing page generator** — Static HTML with responsive layout, meta tags, and a call-to-action button. Input sanitized against XSS. One command, one file, no framework.
 
-Creates a standard layout: `pyproject.toml`, `src/`, `tests/`, and a CLI entry point.
-
-### Generate a landing page
-
-```bash
-agenticstarter landing-page --name "My Agent" --desc "Automates X for Y" --output ./site
-```
-
-Outputs a self-contained `index.html` with meta tags, responsive layout, and a call-to-action button. Input is sanitized against XSS.
-
-### Start the MCP server
-
-```bash
-agenticstarter mcp-server start --host localhost --port 8000
-```
-
-Launches a JSON-RPC 2.0 server that supports tool registration for agentic execution:
+**MCP server** — Minimal JSON-RPC 2.0 server with tool registration. Extend it by plugging in your own handlers:
 
 ```python
 from agenticstarter.mcp_server import MCPServer
@@ -44,6 +32,19 @@ from agenticstarter.mcp_server import MCPServer
 server = MCPServer(host="localhost", port=8000)
 server.register_tool("summarize", my_summarize_handler)
 server.start(blocking=True)
+```
+
+## Usage
+
+```bash
+# Scaffold a new project
+agenticstarter init --name "my-agent" --path ./projects
+
+# Generate a landing page
+agenticstarter landing-page --name "My Agent" --desc "Automates X for Y" --output ./site
+
+# Start the MCP server
+agenticstarter mcp-server start --host localhost --port 8000
 ```
 
 ## Project Structure
