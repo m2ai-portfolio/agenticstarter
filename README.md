@@ -3,7 +3,7 @@
   <img src="assets/infographic.png" alt="Agenticstarter" width="800">
 </p>
 
-<h3 align="center">ONE-LINE DESCRIPTION OF WHAT THIS DOES</h3>
+<h3 align="center">Production-ready starter kit for building and deploying agentic micro-SaaS tools</h3>
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> &bull;
