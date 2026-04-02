@@ -1,74 +1,61 @@
+
 <p align="center">
-  <img src="cover.png" alt="AgenticStarter" width="720" />
+  <img src="assets/infographic.png" alt="Agenticstarter" width="800">
 </p>
 
-# AgenticStarter
+<h3 align="center">ONE-LINE DESCRIPTION OF WHAT THIS DOES</h3>
 
-Skip the boilerplate. AgenticStarter is a CLI that scaffolds a complete micro-SaaS project for your agentic tool — project structure, landing page, and an MCP server — in one command.
+<p align="center">
+  <a href="#quick-start">Quick Start</a> &bull;
+  <a href="#features">Features</a> &bull;
+  <a href="#examples">Examples</a> &bull;
+  <a href="#contributing">Contributing</a>
+</p>
 
-Built for solo developers who have a working agent and want to ship it as a product.
+Agenticstarter is a starter kit that provides a template and CLI to generate a micro-SaaS project for an agentic tool.
+$ agenticstarter init
+[Creates a folder `my-agentic-tool` containing `pyproject.toml`, `src/`, and `tests/` directories.]
 
-## Install
+| Feature | Description |
+|---------|-------------|
+| Project Scaffold | Generates a ready-to-use micro-SaaS project structure with standard files and CLI entry point. |
+| Landing Page Generator | Creates a static HTML landing page for the micro-SaaS product using a prompt-to-app mechanism. |
+| MCP Server | Provides a minimal Model Context Protocol server for core agentic functionality, with extensibility via agentic execution embed. |
 
-```bash
-git clone https://github.com/m2ai-portfolio/agenticstarter.git
-cd agenticstarter
-pip install -e .
-```
+1. Clone the repository: `git clone https://github.com/m2ai-portfolio/agenticstarter.git`
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the CLI: `agenticstarter init`
 
-Requires Python 3.11+. No external services needed.
+**Basic Initialization**
+$ agenticstarter init
+[Creates a folder `my-agentic-tool` containing `pyproject.toml`, `src/`, and `tests/` directories.]
 
-## What You Get
+**Generate Landing Page**
+$ agenticstarter landing-page --name "My Tool" --desc "Awesome tool"
+[Produces `index.html` containing a heading "My Tool", a paragraph "Awesome tool", and a button "Get Started".]
 
-**Project scaffold** — Standard Python package layout with `pyproject.toml`, `src/`, `tests/`, and a CLI entry point. Ready for `pip install -e .` out of the box.
+**Start MCP Server**
+$ agenticstarter mcp-server start
+[Listens on port 8000 and responds with a `pong` message to a `ping` request.]
 
-**Landing page generator** — Static HTML with responsive layout, meta tags, and a call-to-action button. Input sanitized against XSS. One command, one file, no framework.
+Agenticstarter/
+  src/          # Core source code
+    agenticstarter.py          # Main CLI
+    agenticstarter/project_template.py  # Project template
+    agenticstarter/landing_page_template.py  # Landing page template
+    agenticstarter/mcp_server.py  # MCP server
+    agenticstarter/deployment_instructions.md  # Deployment instructions
+  tests/        # Test suite
+    test_project_scaffold.py  # Test for project scaffold
 
-**MCP server** — Minimal JSON-RPC 2.0 server with tool registration. Extend it by plugging in your own handlers:
+| Technology | Purpose |
+|------------|---------|
+| Python 3.11+ | Core language |
+| click | CLI framework |
+| pytest | Testing framework |
 
-```python
-from agenticstarter.mcp_server import MCPServer
-
-server = MCPServer(host="localhost", port=8000)
-server.register_tool("summarize", my_summarize_handler)
-server.start(blocking=True)
-```
-
-## Usage
-
-```bash
-# Scaffold a new project
-agenticstarter init --name "my-agent" --path ./projects
-
-# Generate a landing page
-agenticstarter landing-page --name "My Agent" --desc "Automates X for Y" --output ./site
-
-# Start the MCP server
-agenticstarter mcp-server start --host localhost --port 8000
-```
-
-## Project Structure
-
-```
-agenticstarter/
-  cli.py                    # Click CLI (init, landing-page, mcp-server)
-  project_template.py       # Project scaffold generator
-  landing_page_template.py  # HTML landing page generator
-  mcp_server.py             # JSON-RPC 2.0 MCP server
-  deployment_instructions.md
-tests/
-  test_project_scaffold.py
-  test_landing_page.py
-  test_mcp_server.py
-```
-
-## Testing
-
-```bash
-pip install -e ".[dev]"
-pytest tests/ -v
-```
-
-## License
+Brief section: fork, edit, test, PR.
 
 MIT
+
+Matthew Snow -- [M2AI](https://m2ai.co) | [@m2ai-portfolio](https://github.com/m2ai-portfolio)
