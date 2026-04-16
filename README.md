@@ -14,33 +14,32 @@
 </p>
 
 ## What is this?
-AgenticStarter is a CLI‑driven template that helps solo AI developers turn an existing agentic tool or MCP server into a sellable micro‑SaaS. It scaffolds a project, creates a landing page, and provides a minimal MCP server ready for extension.
+AgenticStarter is a starter kit that lets solo developers spin up a sellable micro‑SaaS around an agentic tool in minutes. It provides a CLI that scaffolds a project, creates a landing page from a simple prompt, and launches an MCP server for the core agentic logic.
 
 ```
 $ agenticstarter init my-agentic-tool
-Created project my-agentic-tool/
-  pyproject.toml
-  src/
-  tests/
+Created directory my-agentic-tool
+Initialized pyproject.toml
+Created src/ and tests/ folders
 ```
 
 ## Problem
-Solo developers who build agentic tools struggle with the boilerplate of creating a sellable product (landing page, auth, payments, deployment), causing them to abandon monetization efforts despite having useful tools.
+Solo developers who build agentic tools struggle with the boilerplate of creating a sellable product -- landing page, auth, payments, deployment -- causing them to abandon monetization efforts despite having useful tools.
 
 ## Features
 | Feature | Description |
 |---------|-------------|
-| Project Scaffold | Generates a ready‑to‑use micro‑SaS layout with pyproject.toml, src/ package, and tests/ directory via `agenticstarter init`. |
-| Landing Page Creator | Produces a static HTML landing page from a product name and description using `agenticstarter landing-page`. |
-| MCP Server | Implements a basic JSON‑RPC 2.0 Model Context Protocol server with agentic execution embed support, listening on localhost:8000. |
-| CLI Entrypoint | Provides a Click‑based command line interface with subcommands `init`, `landing-page`, `mcp-server`. |
-| Deployment Guide | Includes a markdown file with step‑by‑step instructions for deploying the generated micro‑SaaS to common platforms. |
+| Project Scaffold | Generates a ready‑to‑use Python package with `pyproject.toml`, `src/`, and `tests/` via `agenticstarter init`. |
+| Landing Page Creator | Produces a static HTML landing page with meta tags and a CTA button from product name and description. |
+| MCP Server | Implements a minimal Model Context Protocol server that handles JSON‑RPC 2.0 messages and supports agentic execution embed. |
+| CLI Entry Point | Provides a single `agenticstarter` command with subcommands `init`, `landing-page`, and `mcp-server`. |
+| Deployment Instructions | Includes a markdown guide for deploying the generated micro‑SaaS to common platforms. |
 
 ## Quick Start
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/m2ai-portfolio/AgenticStarter.git
-   cd AgenticStarter
+   git clone https://github.com/m2ai-portfolio/agenticstarter.git
+   cd agenticstarter
    ```
 2. Install the package in editable mode:  
    ```bash
@@ -50,57 +49,66 @@ Solo developers who build agentic tools struggle with the boilerplate of creatin
    ```bash
    agenticstarter init my-agentic-tool
    ```
-   This creates a folder `my-agentic-tool/` with the required structure.
+4. Change into the new project and install its dependencies:  
+   ```bash
+   cd my-agentic-tool
+   pip install -e .
+   ```
+5. Generate a landing page for your tool:  
+   ```bash
+   agenticstarter landing-page --name "Text Summarizer" --desc "Condenses long articles into short summaries"
+   ```
+6. Start the MCP server to test core functionality:  
+   ```bash
+   agenticstarter mcp-server start
+   ```
 
 ## Examples
-**Initialize a new project**  
+**Initialize a new micro‑SaaS project**  
 ```
-$ agenticstarter init my-agentic-tool
-Created project my-agentic-tool/
-  pyproject.toml
-  src/
-  tests/
+$ agenticstarter init my-fancy-tool
+Created directory my-fancy-tool
+Initialized pyproject.toml
+Created src/my_fancy_tool/ and tests/ folders
 ```
+*Output shows the new project scaffold with standard files.*
 
 **Generate a landing page**  
 ```
-$ agenticstarter landing-page --name "DocuSage" --desc "AI‑powered contract reviewer"
-Generated index.html:
-<!DOCTYPE html>
-<html>
-<head><title>DocuSage</title></head>
-<body>
-  <h1>DocuSage</h1>
-  <p>AI‑powered contract reviewer</p>
-  <button>Get Started</button>
-</body>
-</html>
+$ agenticstarter landing-page --name "Code Review Bot" --desc "AI‑powered bot that suggests improvements on pull requests"
+Created index.html
 ```
+*Output confirms the HTML file was written; opening it reveals a heading “Code Review Bot”, a description paragraph, and a “Get Started” button.*
 
-**Start the MCP server**  
+**Start the MCP server and test a ping**  
 ```
 $ agenticstarter mcp-server start
-MCP server listening on http://localhost:8000
-→ Received ping, responding with pong
+MCP server listening on localhost:8000
 ```
+*In another terminal:*  
+```
+$ curl -s -X POST http://localhost:8000 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ping","id":1}'
+{"jsonrpc":"2.0","result":"pong","id":1}
+```
+*The server responds with a pong message, confirming the MCP endpoint is operational.*
 
 ## File Structure
 ```
 AgenticStarter: Micro-SaaS Kit for Agentic Tools/
-  agenticstarter/          # Core source code
-    cli.py                 # Click CLI entrypoint (init, landing-page, mcp-server)
-    project_template.py    # Logic for scaffolding a new project
-    landing_page_template.py # Function to render HTML landing page
-    mcp_server.py          # Minimal MCP server with JSON‑RPC 2.0 support
-  tests/                   # Test suite
+  src/agenticstarter/          # Core source code
+    cli.py                     # CLI entry point (init, landing-page, mcp-server)
+    project_template.py        # Project scaffolding logic
+    landing_page_template.py   # HTML landing page generator
+    mcp_server.py              # MCP server implementation
+  tests/                       # Test suite
     test_cli.py
     test_landing_page.py
     test_mcp_server.py
     test_project_template.py
-  assets/                  # Static graphics (infographic, etc.)
-  screenshots/             # Demo images and verification outputs
-  pyproject.toml           # Project metadata, dependencies, and entry points
-  README.md
+  assets/                      # Static assets
+    infographic.png
+  pyproject.toml               # Project configuration and dependencies
+  README.md                    # This file
 ```
 
 ## Tech Stack
@@ -108,13 +116,10 @@ AgenticStarter: Micro-SaaS Kit for Agentic Tools/
 |------------|---------|
 | Python 3.11+ | Core language runtime |
 | click | Building the CLI interface |
-| pytest | Running unit and integration tests |
+| pytest | Running the test suite |
 
 ## Contributing
-1. Fork the repository.  
-2. Create a feature branch.  
-3. Make changes and run `pytest` to verify.  
-4. Submit a pull request.
+Fork the repo, make changes, run `pytest` to verify, then submit a pull request.
 
 ## License
 MIT
